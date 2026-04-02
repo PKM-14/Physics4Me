@@ -1,6 +1,8 @@
 const DATA_URL = "concepts.json";
 
-// Detect concept page by checking for elements
+// --------------------
+// Detect page type
+// --------------------
 const isConceptPage =
   document.getElementById("title") && document.getElementById("content");
 
@@ -10,7 +12,9 @@ if (isConceptPage) {
   loadConcepts();
 }
 
-// Load homepage
+// --------------------
+// Load homepage cards
+// --------------------
 async function loadConcepts() {
   const container = document.getElementById("concept-list");
   if (!container) return;
@@ -37,7 +41,9 @@ async function loadConcepts() {
   }
 }
 
-// Load individual concept
+// --------------------
+// Load individual concept page
+// --------------------
 async function loadConceptPage() {
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
@@ -63,7 +69,10 @@ async function loadConceptPage() {
       return;
     }
 
+    // Set title
     titleEl.innerText = concept.title;
+
+    // Clear previous content
     contentEl.innerHTML = "";
 
     concept.sections.forEach(section => {
@@ -81,11 +90,12 @@ async function loadConceptPage() {
 }
 
 // --------------------
-// Magnetic field visualization
+// Magnetic field visual with slider
 // --------------------
 function initMagneticVisual() {
   const canvas = document.getElementById("magnetic-canvas");
-  if (!canvas) return;
+  const slider = document.getElementById("currentSlider");
+  if (!canvas || !slider) return;
 
   const ctx = canvas.getContext("2d");
   const width = canvas.width;
@@ -110,10 +120,10 @@ function initMagneticVisual() {
     ctx.fillStyle = "#e6edf3";
     ctx.fillRect(wireX - 3, 0, 6, height);
 
-    // Draw particles
+    // Particle speed depends on slider value (current strength)
+    const current = parseFloat(slider.value);
     particles.forEach(p => {
-      // Speed proportional to 1/r
-      const speed = 0.03 / (p.radius / 100);
+      const speed = (0.02 * current) / (p.radius / 100);
       p.angle += speed;
 
       const x = wireX + p.radius * Math.cos(p.angle);
@@ -131,7 +141,9 @@ function initMagneticVisual() {
   draw();
 }
 
-// Initialize visual only for magnetic field
+// --------------------
+// Only run visual for magnetic-field concept
+// --------------------
 document.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
