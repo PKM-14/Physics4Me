@@ -5,34 +5,16 @@
     "description": "Why field lines are misleading—and what a magnetic field actually is.",
     "sections": [
       {
-        "type": "misconception",
         "title": "What You've Been Told",
         "content": "Magnetic fields are shown as lines going from North to South."
       },
       {
-        "type": "problem",
-        "title": "Why This Breaks Down",
-        "content": "Field lines are not physical entities. They do not exist in space as objects. This model hides the fact that magnetic effects depend on motion, not just position."
+        "title": "Better Model",
+        "content": "A magnetic field determines how moving charges experience forces. It only affects charges in motion, and the force depends on both velocity and field orientation."
       },
       {
-        "type": "model",
-        "title": "The Better Model",
-        "content": "A magnetic field is a rule that determines how moving charges experience forces. Unlike electric fields, which act on charges at rest, magnetic fields only influence charges when they are in motion. The direction of the force depends on both the velocity of the charge and the local field orientation, making it inherently directional and dynamic."
-      },
-      {
-        "type": "deepInsight",
-        "title": "What Most People Miss",
-        "content": "Magnetism is not a separate force in the fundamental sense—it is a relativistic effect of electric fields. What appears as a magnetic force in one frame can be explained as an electric force in another."
-      },
-      {
-        "type": "visual",
-        "title": "Visualisation Hint",
-        "content": "Represent a current-carrying wire and show circular regions of influence. Animate how reversing current flips the field direction."
-      },
-      {
-        "type": "insight",
-        "title": "What This Unlocks",
-        "content": "This understanding explains motors, generators, and electromagnetic waves, where changing electric and magnetic fields sustain each other."
+        "title": "Key Insight",
+        "content": "Magnetism is a relativistic effect of electric fields. Changing perspectives explain why it appears as a separate force."
       }
     ]
   }
