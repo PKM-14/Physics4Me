@@ -1,6 +1,6 @@
 const DATA_URL = "concepts.json";
 
-// Check if we are on a concept page or homepage
+// Detect concept page by checking for elements
 const isConceptPage =
   document.getElementById("title") && document.getElementById("content");
 
@@ -10,9 +10,7 @@ if (isConceptPage) {
   loadConcepts();
 }
 
-// --------------------
-// Load homepage cards
-// --------------------
+// Load homepage
 async function loadConcepts() {
   const container = document.getElementById("concept-list");
   if (!container) return;
@@ -39,17 +37,12 @@ async function loadConcepts() {
   }
 }
 
-// --------------------
 // Load individual concept
-// --------------------
 async function loadConceptPage() {
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
 
-  if (!titleEl || !contentEl) {
-    console.error("Concept page elements not found.");
-    return;
-  }
+  if (!titleEl || !contentEl) return;
 
   try {
     const params = new URLSearchParams(window.location.search);
@@ -71,8 +64,6 @@ async function loadConceptPage() {
     }
 
     titleEl.innerText = concept.title;
-
-    // Clear previous content if any
     contentEl.innerHTML = "";
 
     concept.sections.forEach(section => {
@@ -80,7 +71,6 @@ async function loadConceptPage() {
       div.className = "section";
 
       div.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
-
       contentEl.appendChild(div);
     });
 
