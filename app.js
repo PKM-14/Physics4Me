@@ -79,3 +79,63 @@ async function loadConceptPage() {
     contentEl.innerText = "Failed to load concept.";
   }
 }
+
+// --------------------
+// Magnetic field visualization
+// --------------------
+function initMagneticVisual() {
+  const canvas = document.getElementById("magnetic-canvas");
+  if (!canvas) return;
+
+  const ctx = canvas.getContext("2d");
+  const width = canvas.width;
+  const height = canvas.height;
+  const wireX = width / 2;
+  const wireY = height / 2;
+  const particleCount = 80;
+  const particles = [];
+
+  // Initialize particles randomly around the wire
+  for (let i = 0; i < particleCount; i++) {
+    const angle = Math.random() * 2 * Math.PI;
+    const radius = 50 + Math.random() * 120;
+    particles.push({ angle, radius });
+  }
+
+  function draw() {
+    ctx.fillStyle = "#0f1117";
+    ctx.fillRect(0, 0, width, height);
+
+    // Draw wire
+    ctx.fillStyle = "#e6edf3";
+    ctx.fillRect(wireX - 3, 0, 6, height);
+
+    // Draw particles
+    particles.forEach(p => {
+      // Speed proportional to 1/r
+      const speed = 0.03 / (p.radius / 100);
+      p.angle += speed;
+
+      const x = wireX + p.radius * Math.cos(p.angle);
+      const y = wireY + p.radius * Math.sin(p.angle);
+
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, 2 * Math.PI);
+      ctx.fillStyle = "#58a6ff";
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+// Initialize visual only for magnetic field
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
+  if (id === "magnetic-field") {
+    initMagneticVisual();
+  }
+});
