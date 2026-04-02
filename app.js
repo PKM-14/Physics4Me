@@ -1,24 +1,25 @@
 const DATA_URL = "concepts.json";
 
-// Detect page
-const isHomePage =
-  window.location.pathname.endsWith("index.html") ||
-  window.location.pathname === "/" ||
-  window.location.pathname === "/index.html";
+// Check if we are on a concept page or homepage
+const isConceptPage =
+  document.getElementById("title") && document.getElementById("content");
 
-if (isHomePage) {
-  loadConcepts();
-} else {
+if (isConceptPage) {
   loadConceptPage();
+} else {
+  loadConcepts();
 }
 
-// Load homepage
+// --------------------
+// Load homepage cards
+// --------------------
 async function loadConcepts() {
+  const container = document.getElementById("concept-list");
+  if (!container) return;
+
   try {
     const res = await fetch(DATA_URL);
     const concepts = await res.json();
-
-    const container = document.getElementById("concept-list");
 
     concepts.forEach(c => {
       const div = document.createElement("div");
@@ -32,19 +33,32 @@ async function loadConcepts() {
 
       container.appendChild(div);
     });
-
   } catch (err) {
     console.error("Error loading concepts:", err);
-    document.getElementById("concept-list").innerText =
-      "Failed to load concepts.";
+    container.innerText = "Failed to load concepts.";
   }
 }
 
+// --------------------
 // Load individual concept
+// --------------------
 async function loadConceptPage() {
+  const titleEl = document.getElementById("title");
+  const contentEl = document.getElementById("content");
+
+  if (!titleEl || !contentEl) {
+    console.error("Concept page elements not found.");
+    return;
+  }
+
   try {
     const params = new URLSearchParams(window.location.search);
     const id = params.get("id");
+
+    if (!id) {
+      contentEl.innerText = "No concept selected.";
+      return;
+    }
 
     const res = await fetch(DATA_URL);
     const concepts = await res.json();
@@ -52,13 +66,14 @@ async function loadConceptPage() {
     const concept = concepts.find(c => c.id === id);
 
     if (!concept) {
-      document.getElementById("content").innerText = "Concept not found.";
+      contentEl.innerText = "Concept not found.";
       return;
     }
 
-    document.getElementById("title").innerText = concept.title;
+    titleEl.innerText = concept.title;
 
-    const container = document.getElementById("content");
+    // Clear previous content if any
+    contentEl.innerHTML = "";
 
     concept.sections.forEach(section => {
       const div = document.createElement("div");
@@ -66,12 +81,11 @@ async function loadConceptPage() {
 
       div.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
 
-      container.appendChild(div);
+      contentEl.appendChild(div);
     });
 
   } catch (err) {
     console.error("Error loading concept:", err);
-    document.getElementById("content").innerText =
-      "Failed to load concept.";
+    contentEl.innerText = "Failed to load concept.";
   }
 }
