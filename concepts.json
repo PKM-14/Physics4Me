@@ -1,20 +1,24 @@
 [
   {
     "id": "magnetic-field",
-    "title": "Magnetic Field",
-    "description": "Why field lines are misleading—and what a magnetic field actually is.",
+    "title": "Magnetism: From First Principles",
+    "description": "Understanding magnetism from moving charges to real magnets.",
     "sections": [
       {
-        "title": "What You've Been Told",
-        "content": "Magnetic fields are shown as lines going from North to South."
+        "title": "What Causes Magnetism?",
+        "content": "Magnetism arises from moving electric charges. When charges move, they create a magnetic field that influences other moving charges. This means magnetism is not a separate force in isolation, but a consequence of electric fields and motion."
       },
       {
-        "title": "Better Model",
-        "content": "A magnetic field determines how moving charges experience forces. It only affects charges in motion, and the force depends on both velocity and field orientation."
+        "title": "A Straight Wire (Current)",
+        "content": "When current flows through a wire, charges move. This produces a circular magnetic field around the wire. The direction depends on the current direction, and the strength increases with current."
       },
       {
-        "title": "Key Insight",
-        "content": "Magnetism is a relativistic effect of electric fields. Changing perspectives explain why it appears as a separate force."
+        "title": "A Solenoid (Coiled Wire)",
+        "content": "A solenoid is many loops of wire stacked together. Each loop produces a magnetic field, and together they combine to form a strong, nearly uniform field inside the coil."
+      },
+      {
+        "title": "A Bar Magnet",
+        "content": "A bar magnet is made of many tiny atomic current loops. When these align, they produce a large-scale magnetic field. This means a magnet is effectively a collection of aligned microscopic currents."
       }
     ]
   }
