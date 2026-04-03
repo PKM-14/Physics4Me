@@ -1,24 +1,32 @@
 [
   {
     "id": "magnetic-field",
-    "title": "Magnetism: From First Principles",
-    "description": "Understanding magnetism from moving charges to real magnets.",
+    "title": "Magnetism: A First-Principles View",
+    "description": "From moving charges to magnets — a unified explanation.",
     "sections": [
       {
-        "title": "What Causes Magnetism?",
-        "content": "Magnetism arises from moving electric charges. When charges move, they create a magnetic field that influences other moving charges. This means magnetism is not a separate force in isolation, but a consequence of electric fields and motion."
+        "title": "The Origin of Magnetism",
+        "content": "Magnetism arises when electric charges move. A stationary charge produces only an electric field, but once it moves, relativistic effects cause additional forces that we describe as magnetism. This means magnetism is not separate from electricity — it is a consequence of motion."
       },
       {
-        "title": "A Straight Wire (Current)",
-        "content": "When current flows through a wire, charges move. This produces a circular magnetic field around the wire. The direction depends on the current direction, and the strength increases with current."
+        "title": "Magnetic Fields Are Not Objects",
+        "content": "Field lines are just a visual tool. A magnetic field is a rule: it tells you what force a moving charge will experience. The key equation is F = q(v × B), meaning the force depends on velocity and field direction."
       },
       {
-        "title": "A Solenoid (Coiled Wire)",
-        "content": "A solenoid is many loops of wire stacked together. Each loop produces a magnetic field, and together they combine to form a strong, nearly uniform field inside the coil."
+        "title": "Current in a Wire",
+        "content": "A current is simply moving charge. This creates a circular magnetic field around the wire. The strength decreases with distance and increases with current."
       },
       {
-        "title": "A Bar Magnet",
-        "content": "A bar magnet is made of many tiny atomic current loops. When these align, they produce a large-scale magnetic field. This means a magnet is effectively a collection of aligned microscopic currents."
+        "title": "Solenoids and Field Superposition",
+        "content": "A solenoid is many loops of wire. Each loop produces a field, and together they combine to form a strong, uniform field inside. This demonstrates that fields add together — they are not isolated effects."
+      },
+      {
+        "title": "Bar Magnets and Domains",
+        "content": "A bar magnet is made of tiny atomic current loops. When these align, their fields combine to create a large-scale magnetic field. Without alignment, no net magnetism appears."
+      },
+      {
+        "title": "Forces on Moving Charges",
+        "content": "When a charge moves through a magnetic field, it experiences a force perpendicular to its motion. This causes circular or curved motion — the basis of many real-world technologies."
       }
     ]
   }
