@@ -25,12 +25,10 @@ async function loadConcepts() {
   concepts.forEach(c => {
     const div = document.createElement("div");
     div.className = "card";
-
     div.innerHTML = `<h2>${c.title}</h2><p>${c.description}</p>`;
     div.onclick = () => {
       window.location.href = `concept.html?id=${c.id}`;
     };
-
     container.appendChild(div);
   });
 }
@@ -49,18 +47,12 @@ async function loadConceptPage() {
   const concepts = await res.json();
   const concept = concepts.find(c => c.id === id);
 
-  if (!concept) {
-    contentEl.innerText = "Concept not found.";
-    return;
-  }
-
   titleEl.innerText = concept.title;
   contentEl.innerHTML = "";
 
   concept.sections.forEach(section => {
     const div = document.createElement("div");
     div.className = "section";
-
     div.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
     contentEl.appendChild(div);
   });
@@ -69,19 +61,8 @@ async function loadConceptPage() {
 }
 
 // --------------------
-// VISUALS
+// Create canvas helper
 // --------------------
-function initVisuals() {
-  createCanvas("wireCanvas");
-  createCanvas("solenoidCanvas");
-  createCanvas("magnetCanvas");
-
-  wireVisual();
-  solenoidVisual();
-  magnetVisual();
-}
-
-// Create canvas dynamically
 function createCanvas(id) {
   const canvas = document.createElement("canvas");
   canvas.id = id;
@@ -90,18 +71,27 @@ function createCanvas(id) {
   canvas.style.border = "1px solid #30363d";
   canvas.style.marginTop = "20px";
   document.getElementById("content").appendChild(canvas);
+  return canvas;
 }
 
 // --------------------
-// 1. Wire visual
+// INIT ALL VISUALS
 // --------------------
-function wireVisual() {
-  const canvas = document.getElementById("wireCanvas");
-  const ctx = canvas.getContext("2d");
+function initVisuals() {
+  wireVisual(createCanvas("wire"));
+  solenoidVisual(createCanvas("solenoid"));
+  magnetVisual(createCanvas("magnet"));
+  lorentzVisual(createCanvas("lorentz"));
+}
 
-  let particles = Array.from({ length: 60 }, () => ({
+// --------------------
+// 1. Wire
+// --------------------
+function wireVisual(canvas) {
+  const ctx = canvas.getContext("2d");
+  let particles = Array.from({ length: 80 }, () => ({
     angle: Math.random() * Math.PI * 2,
-    radius: 40 + Math.random() * 100
+    radius: 40 + Math.random() * 120
   }));
 
   function draw() {
@@ -113,7 +103,6 @@ function wireVisual() {
 
     particles.forEach(p => {
       p.angle += 0.03;
-
       const x = 300 + p.radius * Math.cos(p.angle);
       const y = 150 + p.radius * Math.sin(p.angle);
 
@@ -130,28 +119,37 @@ function wireVisual() {
 }
 
 // --------------------
-// 2. Solenoid visual
+// 2. Solenoid (UPGRADED)
 // --------------------
-function solenoidVisual() {
-  const canvas = document.getElementById("solenoidCanvas");
+function solenoidVisual(canvas) {
   const ctx = canvas.getContext("2d");
+  let phase = 0;
 
   function draw() {
     ctx.fillStyle = "#0f1117";
     ctx.fillRect(0, 0, 600, 300);
 
-    for (let i = 0; i < 8; i++) {
-      const x = 80 + i * 60;
+    for (let i = 0; i < 10; i++) {
+      let x = 50 + i * 50;
 
       ctx.beginPath();
       ctx.arc(x, 150, 20, 0, 2 * Math.PI);
       ctx.strokeStyle = "#58a6ff";
       ctx.stroke();
+
+      // moving particles inside
+      let y = 150 + 10 * Math.sin(phase + i);
+      ctx.beginPath();
+      ctx.arc(x, y, 3, 0, 2 * Math.PI);
+      ctx.fillStyle = "#e6edf3";
+      ctx.fill();
     }
 
-    ctx.fillStyle = "#e6edf3";
-    ctx.fillText("Strong uniform field inside", 180, 50);
+    // internal field indicator
+    ctx.fillStyle = "#58a6ff";
+    ctx.fillRect(100, 130, 400, 40);
 
+    phase += 0.05;
     requestAnimationFrame(draw);
   }
 
@@ -159,24 +157,20 @@ function solenoidVisual() {
 }
 
 // --------------------
-// 3. Bar magnet (domains)
+// 3. Magnet domains
 // --------------------
-function magnetVisual() {
-  const canvas = document.getElementById("magnetCanvas");
+function magnetVisual(canvas) {
   const ctx = canvas.getContext("2d");
-
   let aligned = false;
 
-  canvas.onclick = () => {
-    aligned = !aligned;
-  };
+  canvas.onclick = () => aligned = !aligned;
 
   function draw() {
     ctx.fillStyle = "#0f1117";
     ctx.fillRect(0, 0, 600, 300);
 
-    for (let x = 50; x < 550; x += 40) {
-      for (let y = 50; y < 250; y += 40) {
+    for (let x = 60; x < 540; x += 40) {
+      for (let y = 60; y < 240; y += 40) {
         let angle = aligned ? 0 : Math.random() * Math.PI * 2;
 
         ctx.beginPath();
@@ -188,7 +182,48 @@ function magnetVisual() {
     }
 
     ctx.fillStyle = "#e6edf3";
-    ctx.fillText(aligned ? "Aligned domains → Magnet" : "Random domains → No magnet", 150, 280);
+    ctx.fillText(aligned ? "Aligned → Magnet" : "Random → No Magnet", 180, 280);
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
+
+// --------------------
+// 4. Lorentz force demo
+// --------------------
+function lorentzVisual(canvas) {
+  const ctx = canvas.getContext("2d");
+
+  let particle = { x: 50, y: 150, vx: 2, vy: 0 };
+
+  function draw() {
+    ctx.fillStyle = "#0f1117";
+    ctx.fillRect(0, 0, 600, 300);
+
+    // magnetic field (into page)
+    ctx.fillStyle = "#58a6ff";
+    for (let x = 0; x < 600; x += 40) {
+      for (let y = 0; y < 300; y += 40) {
+        ctx.fillText("×", x, y);
+      }
+    }
+
+    // Lorentz force (simple circular motion)
+    let ax = -particle.vy * 0.05;
+    let ay = particle.vx * 0.05;
+
+    particle.vx += ax;
+    particle.vy += ay;
+
+    particle.x += particle.vx;
+    particle.y += particle.vy;
+
+    ctx.beginPath();
+    ctx.arc(particle.x, particle.y, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = "#e6edf3";
+    ctx.fill();
 
     requestAnimationFrame(draw);
   }
