@@ -2,25 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Concept</title>
+  <title>Magnetism</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
 <a href="index.html">← Back</a>
 
-<h1 id="title"></h1>
+<h1>Magnetism: From First Principles</h1>
 
-<div id="meta"></div>
-<div id="content"></div>
+<p class="subtitle">
+  Magnetism is not a separate force — it emerges from moving charges.
+</p>
 
-<div id="challenge">
-  <h2>Challenge</h2>
-  <p id="question"></p>
-  <button onclick="checkAnswer(true)">True</button>
-  <button onclick="checkAnswer(false)">False</button>
-  <p id="feedback"></p>
+<!-- CONTROLS -->
+<div class="controls">
+  <label>Field Strength</label>
+  <input type="range" id="strength" min="1" max="10" value="4">
+
+  <label>Velocity</label>
+  <input type="range" id="velocity" min="1" max="10" value="4">
+
+  <button onclick="resetParticle()">Reset Particle</button>
 </div>
+
+<!-- VISUALS -->
+<h2>1. Current in a Wire</h2>
+<canvas id="wireCanvas" width="600" height="300"></canvas>
+
+<h2>2. Solenoid (Field Superposition)</h2>
+<canvas id="solenoidCanvas" width="600" height="300"></canvas>
+
+<h2>3. Bar Magnet (Domains)</h2>
+<button onclick="toggleDomains()">Toggle Alignment</button>
+<canvas id="magnetCanvas" width="600" height="300"></canvas>
+
+<h2>4. Force on a Moving Charge</h2>
+<canvas id="lorentzCanvas" width="600" height="300"></canvas>
 
 <script src="app.js"></script>
 
