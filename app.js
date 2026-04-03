@@ -1,7 +1,7 @@
 const DATA_URL = "concepts.json";
 
 // --------------------
-// Detect page type
+// Page detection
 // --------------------
 const isConceptPage =
   document.getElementById("title") && document.getElementById("content");
@@ -13,121 +13,109 @@ if (isConceptPage) {
 }
 
 // --------------------
-// Load homepage cards
+// Homepage
 // --------------------
 async function loadConcepts() {
   const container = document.getElementById("concept-list");
   if (!container) return;
 
-  try {
-    const res = await fetch(DATA_URL);
-    const concepts = await res.json();
+  const res = await fetch(DATA_URL);
+  const concepts = await res.json();
 
-    concepts.forEach(c => {
-      const div = document.createElement("div");
-      div.className = "card";
+  concepts.forEach(c => {
+    const div = document.createElement("div");
+    div.className = "card";
 
-      div.innerHTML = `<h2>${c.title}</h2><p>${c.description}</p>`;
+    div.innerHTML = `<h2>${c.title}</h2><p>${c.description}</p>`;
+    div.onclick = () => {
+      window.location.href = `concept.html?id=${c.id}`;
+    };
 
-      div.onclick = () => {
-        window.location.href = `concept.html?id=${c.id}`;
-      };
-
-      container.appendChild(div);
-    });
-  } catch (err) {
-    console.error("Error loading concepts:", err);
-    container.innerText = "Failed to load concepts.";
-  }
+    container.appendChild(div);
+  });
 }
 
 // --------------------
-// Load individual concept page
+// Concept page
 // --------------------
 async function loadConceptPage() {
   const titleEl = document.getElementById("title");
   const contentEl = document.getElementById("content");
 
-  if (!titleEl || !contentEl) return;
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get("id");
 
-  try {
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get("id");
+  const res = await fetch(DATA_URL);
+  const concepts = await res.json();
+  const concept = concepts.find(c => c.id === id);
 
-    if (!id) {
-      contentEl.innerText = "No concept selected.";
-      return;
-    }
-
-    const res = await fetch(DATA_URL);
-    const concepts = await res.json();
-
-    const concept = concepts.find(c => c.id === id);
-
-    if (!concept) {
-      contentEl.innerText = "Concept not found.";
-      return;
-    }
-
-    // Set title
-    titleEl.innerText = concept.title;
-
-    // Clear previous content
-    contentEl.innerHTML = "";
-
-    concept.sections.forEach(section => {
-      const div = document.createElement("div");
-      div.className = "section";
-
-      div.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
-      contentEl.appendChild(div);
-    });
-
-  } catch (err) {
-    console.error("Error loading concept:", err);
-    contentEl.innerText = "Failed to load concept.";
+  if (!concept) {
+    contentEl.innerText = "Concept not found.";
+    return;
   }
+
+  titleEl.innerText = concept.title;
+  contentEl.innerHTML = "";
+
+  concept.sections.forEach(section => {
+    const div = document.createElement("div");
+    div.className = "section";
+
+    div.innerHTML = `<h2>${section.title}</h2><p>${section.content}</p>`;
+    contentEl.appendChild(div);
+  });
+
+  initVisuals();
 }
 
 // --------------------
-// Magnetic field visual with slider
+// VISUALS
 // --------------------
-function initMagneticVisual() {
-  const canvas = document.getElementById("magnetic-canvas");
-  const slider = document.getElementById("currentSlider");
-  if (!canvas || !slider) return;
+function initVisuals() {
+  createCanvas("wireCanvas");
+  createCanvas("solenoidCanvas");
+  createCanvas("magnetCanvas");
 
+  wireVisual();
+  solenoidVisual();
+  magnetVisual();
+}
+
+// Create canvas dynamically
+function createCanvas(id) {
+  const canvas = document.createElement("canvas");
+  canvas.id = id;
+  canvas.width = 600;
+  canvas.height = 300;
+  canvas.style.border = "1px solid #30363d";
+  canvas.style.marginTop = "20px";
+  document.getElementById("content").appendChild(canvas);
+}
+
+// --------------------
+// 1. Wire visual
+// --------------------
+function wireVisual() {
+  const canvas = document.getElementById("wireCanvas");
   const ctx = canvas.getContext("2d");
-  const width = canvas.width;
-  const height = canvas.height;
-  const wireX = width / 2;
-  const wireY = height / 2;
-  const particleCount = 80;
-  const particles = [];
 
-  // Initialize particles randomly around the wire
-  for (let i = 0; i < particleCount; i++) {
-    const angle = Math.random() * 2 * Math.PI;
-    const radius = 50 + Math.random() * 120;
-    particles.push({ angle, radius });
-  }
+  let particles = Array.from({ length: 60 }, () => ({
+    angle: Math.random() * Math.PI * 2,
+    radius: 40 + Math.random() * 100
+  }));
 
   function draw() {
     ctx.fillStyle = "#0f1117";
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillRect(0, 0, 600, 300);
 
-    // Draw wire
     ctx.fillStyle = "#e6edf3";
-    ctx.fillRect(wireX - 3, 0, 6, height);
+    ctx.fillRect(295, 0, 10, 300);
 
-    // Particle speed depends on slider value (current strength)
-    const current = parseFloat(slider.value);
     particles.forEach(p => {
-      const speed = (0.02 * current) / (p.radius / 100);
-      p.angle += speed;
+      p.angle += 0.03;
 
-      const x = wireX + p.radius * Math.cos(p.angle);
-      const y = wireY + p.radius * Math.sin(p.angle);
+      const x = 300 + p.radius * Math.cos(p.angle);
+      const y = 150 + p.radius * Math.sin(p.angle);
 
       ctx.beginPath();
       ctx.arc(x, y, 3, 0, 2 * Math.PI);
@@ -142,12 +130,68 @@ function initMagneticVisual() {
 }
 
 // --------------------
-// Only run visual for magnetic-field concept
+// 2. Solenoid visual
 // --------------------
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get("id");
-  if (id === "magnetic-field") {
-    initMagneticVisual();
+function solenoidVisual() {
+  const canvas = document.getElementById("solenoidCanvas");
+  const ctx = canvas.getContext("2d");
+
+  function draw() {
+    ctx.fillStyle = "#0f1117";
+    ctx.fillRect(0, 0, 600, 300);
+
+    for (let i = 0; i < 8; i++) {
+      const x = 80 + i * 60;
+
+      ctx.beginPath();
+      ctx.arc(x, 150, 20, 0, 2 * Math.PI);
+      ctx.strokeStyle = "#58a6ff";
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = "#e6edf3";
+    ctx.fillText("Strong uniform field inside", 180, 50);
+
+    requestAnimationFrame(draw);
   }
-});
+
+  draw();
+}
+
+// --------------------
+// 3. Bar magnet (domains)
+// --------------------
+function magnetVisual() {
+  const canvas = document.getElementById("magnetCanvas");
+  const ctx = canvas.getContext("2d");
+
+  let aligned = false;
+
+  canvas.onclick = () => {
+    aligned = !aligned;
+  };
+
+  function draw() {
+    ctx.fillStyle = "#0f1117";
+    ctx.fillRect(0, 0, 600, 300);
+
+    for (let x = 50; x < 550; x += 40) {
+      for (let y = 50; y < 250; y += 40) {
+        let angle = aligned ? 0 : Math.random() * Math.PI * 2;
+
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x + 20 * Math.cos(angle), y + 20 * Math.sin(angle));
+        ctx.strokeStyle = "#58a6ff";
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = "#e6edf3";
+    ctx.fillText(aligned ? "Aligned domains → Magnet" : "Random domains → No magnet", 150, 280);
+
+    requestAnimationFrame(draw);
+  }
+
+  draw();
+}
