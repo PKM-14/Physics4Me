@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Physics Learning Hub</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; background: #0f172a; color: #e2e8f0; line-height: 1.75; }
+    header { background: #020617; padding: 20px; text-align: center; border-bottom: 2px solid #1e293b; }
+    header h1 { margin: 0; font-size: 2rem; color: #38bdf8; }
+    .container { max-width: 900px; margin: auto; padding: 20px; }
+    section { margin-bottom: 70px; }
+    h2 { color: #38bdf8; border-bottom: 1px solid #1e293b; padding-bottom: 5px; }
+    h3 { margin-top: 25px; color: #7dd3fc; }
+    .box { background: #020617; padding: 15px; border-left: 4px solid #38bdf8; margin: 20px 0; }
+    .equation { background: #020617; padding: 15px; text-align: center; font-size: 1.2rem; border: 1px solid #1e293b; margin: 20px 0; }
+    ul { padding-left: 20px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Physics Learning Hub</h1>
+  <nav style="margin-top:10px; flex-wrap:wrap;">
+    <a href="#kinematics" style="margin:0 10px; color:#cbd5f5;">Kinematics</a>
+    <a href="#energy" style="margin:0 10px; color:#cbd5f5;">Energy</a>
+    <a href="#momentum" style="margin:0 10px; color:#cbd5f5;">Momentum</a>
+    <a href="#waves" style="margin:0 10px; color:#cbd5f5;">Waves</a>
+    <a href="#electricity" style="margin:0 10px; color:#cbd5f5;">Electricity</a>
+    <a href="#fluids" style="margin:0 10px; color:#cbd5f5;">Fluids</a>
+    <a href="#thermo" style="margin:0 10px; color:#cbd5f5;">Thermodynamics</a>
+    <a href="#modern" style="margin:0 10px; color:#cbd5f5;">Modern Physics</a>
+  </nav>
+</header>
+
+<div class="container">
+
+<section id="intuition">
+<h2>1. Intuition — What Magnetism Actually Does</h2> — What Magnetism Actually Does</h2>
+
+<p>
+Magnetism is fundamentally different from electric forces. Electric fields act on charges simply for existing. Magnetic fields only act when charges are moving.
+</p>
+
+<p>
+A useful analogy is running through rain. If you stand still, rain falls straight down. But when you move, the rain appears to hit you at an angle. Motion changes how you experience the same environment — magnetism works in a similar way.
+</p>
+
+<div class="box">
+No motion → no magnetic force.
+</div>
+
+</section>
+
+<section id="lorentz">
+<h2>2. Lorentz Force — The Core Law</h2> — The Core Law</h2>
+
+<h3>Observed Behaviour</h3>
+<p>
+A charged particle moving through a magnetic field is deflected sideways. Its speed does not change, only its direction.
+</p>
+
+<h3>Why This Must Be True</h3>
+<p>
+If the force acted along motion, the particle would speed up or slow down. Since this does not happen, the force must be perpendicular to velocity.
+</p>
+
+<div class="equation">F = qvB sin(θ)</div>
+
+<ul>
+<li>q → charge</li>
+<li>v → velocity</li>
+<li>B → magnetic field</li>
+<li>sin(θ) → selects perpendicular component</li>
+</ul>
+
+<div class="box">
+Magnetism is geometry — only sideways motion interacts.
+</div>
+
+<h3>Deep Insight</h3>
+<p>
+Magnetic forces cannot do work because they are always perpendicular to motion. This is why they bend paths instead of changing speed.
+</p>
+
+</section>
+
+<section id="circular">
+<h2>3. Circular Motion — Derived, Not Memorised</h2> — Derived, Not Memorised</h2>
+
+<p>
+If velocity is fully perpendicular to the magnetic field, the force is always sideways, creating circular motion.
+</p>
+
+<div class="equation">qvB = mv² / r</div>
+<div class="equation">r = mv / qB</div>
+
+<ul>
+<li>Higher velocity → larger radius</li>
+<li>Stronger field → tighter curve</li>
+</ul>
+
+<h3>Extension Insight</h3>
+<p>
+If velocity is not fully perpendicular, the particle moves in a helix (spiral), combining circular motion and forward motion.
+</p>
+
+</section>
+
+<section>
+<h2>4. Fleming’s Left Hand Rule — Direction</h2>
+
+<p>
+Magnetic forces exist in three perpendicular directions: field, current, and force. This reflects the cross-product nature of the Lorentz force.
+</p>
+
+<div class="box">
+Magnetism is inherently 3D — it cannot be understood in straight-line thinking.
+</div>
+
+</section>
+
+<section id="motor">
+<h2>5. Motor Effect — Electricity to Motion</h2> — Electricity to Motion</h2>
+
+<h3>From First Principles</h3>
+<p>
+A current is moving charges. Each charge experiences the Lorentz force, so the entire wire experiences a force.
+</p>
+
+<div class="equation">F = BIL</div>
+
+<ul>
+<li>B → field strength</li>
+<li>I → current</li>
+<li>L → length in field</li>
+</ul>
+
+<div class="box">
+More current = more moving charges = larger force.
+</div>
+
+<h3>Motor Mechanism</h3>
+<p>
+Motors work by flipping current direction so forces keep pushing in the same rotational direction.
+</p>
+
+<h3>Worked Insight</h3>
+<p>
+Why does increasing current make a motor stronger? Because more charge per second flows, increasing total Lorentz force.
+</p>
+
+</section>
+
+<section id="generator">
+<h2>6. Generator Effect — Motion to Electricity</h2> — Motion to Electricity</h2>
+
+<h3>Reverse Thinking</h3>
+<p>
+Moving a conductor through a magnetic field forces its charges to move, generating current.
+</p>
+
+<div class="box">
+Motion + field → charge movement → current
+</div>
+
+<h3>Energy Reality</h3>
+<p>
+Electrical energy comes from mechanical work. You must push the generator — it does not produce energy freely.
+</p>
+
+<h3>Worked Insight</h3>
+<p>
+Why does a generator become harder to turn when connected to a circuit? Because induced currents create opposing forces (Lenz’s Law), requiring more input energy.
+</p>
+
+</section>
+
+<section id="induction">
+<h2>7. Electromagnetic Induction (Faraday’s Law)</h2> (Faraday’s Law)</h2>
+
+<div class="equation">ε = - dΦ / dt</div>
+
+<ul>
+<li>Φ → magnetic flux</li>
+<li>dΦ/dt → rate of change</li>
+</ul>
+
+<div class="box">
+No change in magnetic flux → no induced voltage.
+</div>
+
+<h3>Key Idea</h3>
+<p>
+It is not the field itself, but the change in the field that creates voltage.
+</p>
+
+</section>
+
+<section>
+<h2>8. Lenz’s Law — Conservation of Energy</h2>
+
+<p>
+The induced current always opposes the change that created it.
+</p>
+
+<div class="box">
+Nature resists change to preserve energy balance.
+</div>
+
+<p>
+Without this, generators could produce infinite energy — which is impossible.
+</p>
+
+</section>
+
+<section>
+<h2>9. Common Misconceptions</h2>
+
+<ul>
+<li>Magnetic fields do work → false (force is perpendicular)</li>
+<li>Current directly causes force → incomplete (moving charges do)</li>
+<li>Stronger magnets always increase speed → false (they curve motion)</li>
+</ul>
+
+</section>
+
+<section>
+<h2>10. Unification — The Bigger Picture</h2>
+
+<p>
+Electricity and magnetism are two aspects of the same phenomenon: electromagnetism.
+</p>
+
+<p>
+Magnetism arises because motion changes how electric fields are observed — a consequence of relativity.
+</p>
+
+<div class="box">
+Electric fields + motion = magnetic effects
+</div>
+
+</section>
+
+
+
+<section id="kinematics">
+<h2>Kinematics & Forces</h2>
+<p>Study of motion without and with forces. Covers velocity, acceleration, Newton’s Laws, and free-body thinking.</p>
+<div class="box">Key idea: Forces cause acceleration, not motion.</div>
+</section>
+
+<section id="energy">
+<h2>Energy & Work</h2>
+<p>Energy transfer underpins all physics. Includes kinetic energy, gravitational potential, and conservation laws.</p>
+<div class="box">Energy cannot be created or destroyed — only transferred.</div>
+</section>
+
+<section id="momentum">
+<h2>Momentum & Collisions</h2>
+<p>Momentum explains motion during interactions. Covers conservation, impulse, and collision types.</p>
+<div class="box">Momentum is always conserved in isolated systems.</div>
+</section>
+
+<section id="waves">
+<h2>Waves & Sound</h2>
+<p>Waves transfer energy without transferring matter. Includes frequency, wavelength, and interference.</p>
+<div class="box">Wave speed = frequency × wavelength.</div>
+</section>
+
+<section id="electricity">
+<h2>Electricity & Magnetism</h2>
+<p>Charge, current, voltage, resistance, and their link to magnetic effects.</p>
+<div class="box">Electricity and magnetism are unified — not separate topics.</div>
+</section>
+
+<section id="fluids">
+<h2>Fluid Dynamics & Aerodynamics</h2>
+<p>How fluids move. Includes pressure, lift, drag, and airflow over surfaces.</p>
+<div class="box">Lift arises from pressure differences and momentum change.</div>
+</section>
+
+<section id="thermo">
+<h2>Thermodynamics</h2>
+<p>Energy, heat, and temperature. Includes temperature-time graphs and PV diagrams.</p>
+<div class="box">Heat transfer drives all thermal processes.</div>
+</section>
+
+<section id="modern">
+<h2>Modern Physics</h2>
+<p>Explores photons, relativity, and quantum ideas at an introductory level.</p>
+<div class="box">Classical physics breaks down at very small and very fast scales.</div>
+</section>
+
+</div>
+
+<footer style="text-align:center; padding:20px; border-top:2px solid #1e293b; color:#64748b;">
+  <p>Built for deep understanding, not memorisation.</p>
+</footer>
+
+</body>
+</html>
